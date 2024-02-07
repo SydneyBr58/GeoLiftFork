@@ -769,6 +769,13 @@ GeoLiftPowerFinder <- function(data,
 
   resultsM$abs_lift_in_zero <- round(abs(resultsM$detected_lift - resultsM$EffectSize), 3)
 
+  resultsM$ci_upper <- round(
+    quantile(resultsM$abs_lift_in_zero, 0.95), 3
+  )
+  resultsM$ci_lower <- round(
+    quantile(resultsM$abs_lift_in_zero, 1 - 0.95), 3
+  )
+                             
   resultsM <- as.data.frame(resultsM) %>%
     dplyr::mutate(
       rank_mde = dplyr::dense_rank(abs(EffectSize)),
